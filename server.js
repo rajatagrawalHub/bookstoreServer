@@ -219,14 +219,14 @@ app.post('/verifyCaptcha', async (req, res) => {
     const { captchaToken } = req.body;
 
     try {
-        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null, {
+        const response = await axios.post(`https://cors-anywhere.herokuapp.com/https://www.google.com/recaptcha/api/siteverify`, null, {
             params: {
                 secret: '6LesgWsqAAAAAMJxh6lGTeGIWgulSyadtpUVfqij',
                 response: captchaToken,
             }
         });
 
-        if (response.data.success) {
+        if (await response.data.success) {
             res.status(200).json({ success: true });
         } else {
             res.status(400).json({ success: false, message: "CAPTCHA verification failed" });
